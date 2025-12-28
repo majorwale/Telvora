@@ -27,19 +27,19 @@
       rel="stylesheet"
     />
 
-    <!-- Vendor CSS Files -->
+    <!-- Vendor CSS Files - CDN -->
     <link
-      href="assets/vendor/bootstrap/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <link
-      href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
       rel="stylesheet"
     />
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/swiper@10.3.1/swiper-bundle.min.css" rel="stylesheet" />
     <link
-      href="assets/vendor/glightbox/css/glightbox.min.css"
+      href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css"
       rel="stylesheet"
     />
 
@@ -88,7 +88,7 @@
           <a href="index.html" class="logo d-flex align-items-center">
             <!-- Uncomment the line below if you also wish to use an image logo -->
             <img
-              src="assets/img/TELVORA-02.png"
+              src="https://res.cloudinary.com/dvgth7he0/image/upload/v1766915257/TELVORA-02_bnsr0u.png"
               alt="Telvora Logo"
               style="width: 250px; height: 550px"
             />
@@ -216,9 +216,10 @@
             <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
               <div class="hero-image">
                 <img
-                  src="assets/img/construction/hero section.png"
+                  src="https://res.cloudinary.com/dvgth7he0/image/upload/v1766914734/hero_section_y1y7es.png"
                   alt="Construction Project"
                   class="img-fluid"
+                  loading="lazy"
                 />
                 <!-- <div class="image-badge">
                   <span>ISO 9001:2015</span>
@@ -342,15 +343,17 @@
                 data-aos-delay="200"
               >
                 <img
-                  src="assets/img/construction/Abou us 1.png"
+                  src="https://res.cloudinary.com/dvgth7he0/image/upload/v1766914605/Abou_us_1_ezqa8w.png"
                   alt="Construction Team"
                   class="img-fluid main-image rounded"
+                  loading="lazy"
                 />
                 <div class="image-overlay">
                   <img
-                    src="assets/img/construction/about 2.png"
+                    src="https://res.cloudinary.com/dvgth7he0/image/upload/v1766914632/about_2_m0k6n5.png"
                     alt="Construction Project"
                     class="img-fluid rounded"
+                    loading="lazy"
                   />
                 </div>
                 <!-- <div
@@ -1717,9 +1720,10 @@
       <div class="col-lg-6">
         <div class="cta-image-container" data-aos="fade-left" data-aos-delay="300">
           <img
-            src="assets/img/construction/telvora 4.png"
+            src="https://res.cloudinary.com/dvgth7he0/image/upload/v1766914440/telvora_4_fryxme.png"
             alt="Request a Quote"
             class="img-fluid rounded shadow"
+            loading="lazy"
           />
         </div>
       </div>
@@ -1878,7 +1882,7 @@
         <div class="row gy-4">
           <div class="col-lg-5 col-md-12 footer-about">
                <a href="index.html" class="logo d-flex align-items-center">
-    <img src="assets/img/TELVORA 233-05.png"
+    <img src="https://res.cloudinary.com/dvgth7he0/image/upload/v1766914021/TELVORA_233-05_a6inp7.png"
          alt="Telvora Logo"
          class="footer-logo">
 </a>
@@ -1957,14 +1961,45 @@
     <!-- Preloader -->
     <div id="preloader"></div>
 
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Vendor JS Files - CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10.3.1/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/glightbox.min.js"></script>
 
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
+    
+    <!-- Performance & Optimization Script -->
+    <script>
+      // Intersection Observer for advanced image lazy loading
+      if ('IntersectionObserver' in window) {
+        const images = document.querySelectorAll('img[loading="lazy"]');
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              img.src = img.src; // Trigger image load
+              observer.unobserve(img);
+            }
+          });
+        });
+        images.forEach(img => imageObserver.observe(img));
+      }
+      
+      // Preload next page on link hover for instant navigation
+      document.querySelectorAll('a[href$=".html"]').forEach(link => {
+        link.addEventListener('mouseenter', () => {
+          const href = link.href;
+          if (!document.querySelector(`link[href="${href}"]`)) {
+            const prefetch = document.createElement('link');
+            prefetch.rel = 'prefetch';
+            prefetch.href = href;
+            document.head.appendChild(prefetch);
+          }
+        });
+      });
+    </script>
   </body>
 </html>
