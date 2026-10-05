@@ -95,6 +95,7 @@
    * Animation on scroll function and init
    */
   function aosInit() {
+    if (!window.AOS) return;
     AOS.init({
       duration: 600,
       easing: 'ease-in-out',
@@ -108,6 +109,7 @@
    * Init swiper sliders
    */
   function initSwiper() {
+    if (!window.Swiper) return;
     document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
       let config = JSON.parse(
         swiperElement.querySelector(".swiper-config").innerHTML.trim()
@@ -126,8 +128,10 @@
   /**
    * Initiate glightbox
    */
-  const glightbox = GLightbox({
-    selector: '.glightbox'
-  });
+  if (window.GLightbox && document.querySelector('.glightbox')) {
+    GLightbox({
+      selector: '.glightbox'
+    });
+  }
 
 })();

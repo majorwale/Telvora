@@ -37,76 +37,19 @@ All vendor libraries have been migrated from local `assets/vendor/` directories 
 
 ---
 
-## 2. Image Lazy Loading
+## 2. Responsive Image Delivery
 
 ### Implementation
 
-All images now include the `loading="lazy"` attribute:
+Below-fold content images use the browser's native `loading="lazy"` behavior. The navigation logos remain eager, and the homepage hero is eager with high fetch priority so it is not delayed as an offscreen image.
 
-```html
-<img
-  src="assets/img/construction/hero section.png"
-  alt="Construction Project"
-  class="img-fluid"
-  loading="lazy"
-/>
-```
-
-### Benefits
-
-- ⏱️ **Faster initial page load**: Images below the fold load only when needed
-- 💾 **Reduced bandwidth**: Unused images aren't downloaded
-- 📱 **Better mobile experience**: Especially beneficial on slower connections
-- 🎯 **Improved Core Web Vitals**: Helps with LCP (Largest Contentful Paint)
-
-### Enhanced Lazy Loading Script
-
-Added IntersectionObserver API for advanced image lazy loading:
-
-```javascript
-if ("IntersectionObserver" in window) {
-  const images = document.querySelectorAll('img[loading="lazy"]');
-  const imageObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const img = entry.target;
-        img.src = img.src; // Trigger image load
-        observer.unobserve(img);
-      }
-    });
-  });
-  images.forEach((img) => imageObserver.observe(img));
-}
-```
+Cloudinary image URLs use `f_auto,q_auto` to negotiate modern formats and compression. The homepage hero is capped at 1200 px wide. A request with WebP support returned a 98 KB, 1200×800 WebP from a 3.1 MB PNG source.
 
 ---
 
-## 3. Smart Page Prefetching
+## 3. Page-Specific Vendor Loading
 
-### How It Works
-
-The site now intelligently prefetches pages when users hover over navigation links:
-
-```javascript
-document.querySelectorAll('a[href$=".html"]').forEach((link) => {
-  link.addEventListener("mouseenter", () => {
-    const href = link.href;
-    if (!document.querySelector(`link[href="${href}"]`)) {
-      const prefetch = document.createElement("link");
-      prefetch.rel = "prefetch";
-      prefetch.href = href;
-      document.head.appendChild(prefetch);
-    }
-  });
-});
-```
-
-### Benefits
-
-- ⚡ **Instant navigation**: Pages load near-instantly when clicked
-- 🎯 **Predictive loading**: Anticipates user navigation patterns
-- 🔄 **Zero bandwidth waste**: Only prefetches when users show interest
-- 📊 **Better UX**: Smoother transitions between pages
+Bootstrap and AOS remain shared dependencies. Swiper CSS and JavaScript are included only on the homepage; GLightbox is included only on `service-details.html`. The main script guards optional libraries before initializing them. Hover-based page prefetching has been removed to avoid unrequested downloads.
 
 ---
 
@@ -196,33 +139,22 @@ Tools to track improvements:
 
 ## 5. Migration Checklist
 
-All items completed:
+Implemented loading changes:
 
 - ✅ Bootstrap CSS/JS → jsDelivr CDN
 - ✅ Bootstrap Icons → jsDelivr CDN
 - ✅ AOS → unpkg CDN
-- ✅ Swiper → jsDelivr CDN
-- ✅ GLightbox → jsDelivr CDN
-- ✅ Image lazy loading attributes added
-- ✅ Smart prefetching script implemented
-- ✅ Local vendor folder can now be deleted (optional, keeps backup)
+- ✅ Swiper → jsDelivr CDN on the homepage only
+- ✅ GLightbox → jsDelivr CDN on `service-details.html` only
+- ✅ Native lazy loading added to below-fold images
+- ✅ Cloudinary automatic format/quality enabled for hosted images
+- ✅ Unused hover prefetch and custom lazy-loading script removed
 
 ---
 
-## 6. Performance Metrics (Expected Improvements)
+## 6. Performance Verification
 
-### Before Optimization
-
-- Initial page load: ~4-5s (with local vendor files)
-- Bandwidth per page: ~3-4 MB
-- LCP (Largest Contentful Paint): ~3-4s
-
-### After Optimization
-
-- Initial page load: ~1-2s (vendor files cached from CDN)
-- Bandwidth per page: ~1-1.5 MB
-- LCP: ~1-2s
-- CLS (Cumulative Layout Shift): Improved with lazy loading
+The homepage hero transformation was verified to return a 98 KB WebP at 1200×800. Desktop and 390 px mobile checks showed no horizontal overflow. No full-site before/after Lighthouse or PageSpeed measurements have been recorded; use those tools against the deployed site for end-to-end metrics.
 
 ---
 
@@ -274,8 +206,8 @@ curl -I https://yoursite.com
 # Check image load performance
 # Open DevTools > Network tab > Filter by images
 
-# Test prefetching
-# Open DevTools > Network > Hover over links to see prefetch requests
+# Confirm only the page-specific libraries are requested
+# Homepage: Swiper; service-details.html: GLightbox
 ```
 
 ---
@@ -320,12 +252,4 @@ All HTML files have been updated:
 
 ## Summary
 
-Your website is now optimized with:
-
-1. **70% faster asset delivery** via CDN
-2. **Smart image loading** that adapts to user behavior
-3. **Predictive page prefetching** for instant navigation
-4. **Reduced server bandwidth** by ~60-70%
-5. **Better mobile performance** across all pages
-
-These optimizations will significantly improve user experience, reduce bounce rates, and improve SEO rankings! 🚀
+The site now avoids downloading below-fold images and unused slider/lightbox libraries, requests fewer font styles, and serves Cloudinary images in modern compressed formats when supported. Validate overall performance on the deployed site with PageSpeed Insights or Lighthouse; results depend on hosting, caching, and network conditions.

@@ -23,7 +23,7 @@
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800&family=Lato:wght@400;500;700&family=Ubuntu:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
@@ -37,14 +37,8 @@
       rel="stylesheet"
     />
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/swiper@10.3.1/swiper-bundle.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css"
-      rel="stylesheet"
-    />
+
+
 
     <!-- Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet" />
@@ -325,7 +319,7 @@
         <div class="row gy-4">
           <div class="col-lg-5 col-md-12 footer-about">
             <a href="index.html" class="logo d-flex align-items-center">
-              <img
+              <img loading="lazy"
                 src="assets/img/TELVORA 233-05.png"
                 alt="Telvora Logo"
                 class="footer-logo"
@@ -412,38 +406,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10.3.1/swiper-bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/glightbox.min.js"></script>
+
+
 
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
-
-    <!-- Performance & Optimization Script -->
-    <script>
-      if ("IntersectionObserver" in window) {
-        const images = document.querySelectorAll('img[loading="lazy"]');
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const img = entry.target;
-              img.src = img.src;
-              observer.unobserve(img);
-            }
-          });
-        });
-        images.forEach((img) => imageObserver.observe(img));
-      }
-      document.querySelectorAll('a[href$=".html"]').forEach((link) => {
-        link.addEventListener("mouseenter", () => {
-          const href = link.href;
-          if (!document.querySelector(`link[href="${href}"]`)) {
-            const prefetch = document.createElement("link");
-            prefetch.rel = "prefetch";
-            prefetch.href = href;
-            document.head.appendChild(prefetch);
-          }
-        });
-      });
-    </script>
   </body>
 </html>

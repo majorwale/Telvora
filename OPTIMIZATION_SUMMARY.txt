@@ -2,38 +2,32 @@
 
 ## What Was Done ✅
 
-Your Telvora website has been fully optimized for cloud-based asset delivery and smart loading strategies.
+Telvora uses page-specific vendor loading, native image lazy loading, and Cloudinary image transformations to reduce unnecessary network work.
 
-### 1. **CDN Integration** 
-   - Replaced local vendor files with global CDN (jsDelivr)
-   - **Impact**: ~2-3 MB files now load from fastest edge server worldwide
-   - **Result**: 60-70% faster asset loading
+### 1. **Page-Specific Vendor Assets**
+   - Bootstrap and AOS remain available site-wide through CDNs
+   - Swiper is loaded only on the homepage
+   - GLightbox is loaded only on the service-details page
 
-### 2. **Image Lazy Loading**
-   - Added `loading="lazy"` to all images
-   - Images only load when users scroll into view
-   - **Result**: 40-50% faster initial page load
+### 2. **Image Delivery**
+   - Non-logo, below-fold images use native `loading="lazy"`
+   - The homepage hero uses high fetch priority and a 1200 px Cloudinary width cap
+   - Cloudinary negotiates WebP/AVIF and automatic quality where supported
+   - Verified hero response: 98 KB WebP, compared with a 3.1 MB source PNG
 
-### 3. **Smart Page Prefetching**
-   - Pages prefetch when users hover over links
-   - Instant navigation experience
-   - **Result**: Near-zero delay between page clicks
+### 3. **Reduced Font Requests**
+   - Google Fonts requests only the weights used by the site styles
+   - `display=swap` keeps text visible while fonts load
 
-### 4. **Performance Scripts**
-   - Advanced IntersectionObserver for optimal image loading
-   - Automatic prefetch management
-   - Works on all modern browsers
+### 4. **Removed Unnecessary Work**
+   - Removed the ineffective custom lazy-loading observer; browsers handle native lazy loading
+   - Removed hover prefetching that could download pages users never visit, especially on mobile
 
 ---
 
-## Current Performance Status
+## Verification
 
-| Metric | Before | After | Improvement |
-|--------|--------|-------|-------------|
-| **Initial Load** | ~4-5s | ~1-2s | 60-75% faster |
-| **Bandwidth/Page** | 3-4 MB | 1-1.5 MB | 60-70% reduction |
-| **Image Loading** | All images load immediately | Only visible images load | 40-50% faster |
-| **Navigation Speed** | 1-2s delay | Near instant | 80-90% faster |
+The Cloudinary homepage hero was checked with an image-capable browser request and returned a 98 KB WebP at 1200×800. Desktop and 390 px mobile browser checks showed no horizontal overflow. No before/after Lighthouse or PageSpeed measurements have been recorded, so overall speed percentages are intentionally not claimed.
 
 ---
 
@@ -69,7 +63,7 @@ Track improvements:
 4. Refresh page
 5. Notice:
    - ✅ Files load from CDN (jsdelivr.net, unpkg.com)
-   - ✅ Images marked with `loading="lazy"`
+   - ✅ Below-fold images marked with `loading="lazy"`
    - ✅ Faster load times
 
 ### Performance Test
@@ -98,20 +92,16 @@ All 13 HTML pages updated:
 
 ## Important Notes
 
-1. **Local vendor folder is now optional**
-   - You can keep `assets/vendor/` as backup
-   - All files now load from CDN
-   - Reduces server storage usage
+1. **Local vendor files remain in the repository**
+   - Pages request the CDN versions; local vendor assets are retained as repository files
 
 2. **No functionality lost**
-   - All libraries work exactly as before
-   - Bootstrap, AOS, Swiper, GLightbox fully functional
+   - Bootstrap and AOS remain site-wide; Swiper and GLightbox are loaded only where used
    - Forms work perfectly
 
 3. **Mobile Optimized**
    - Especially beneficial on slower connections
-   - Smart prefetching reduces data usage
-   - Lazy loading saves mobile bandwidth
+   - Native lazy loading and removal of hover prefetching avoid unnecessary mobile downloads
 
 4. **SEO Benefits**
    - Faster loading improves rankings
